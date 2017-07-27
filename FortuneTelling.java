@@ -7,12 +7,15 @@ package org.mypackage.sample;
 
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.util.Date;
 import java.util.Random;
+import javax.servlet.RequestDispatcher;
+import org.camp.servlet.ResultData;
 
 /**
  *
@@ -33,25 +36,22 @@ public class FortuneTelling extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
+        final String result = "/WEB-INF/jsp/FortuneTellingResult.jsp";
+        
         String luckList[] = {"大吉", "中吉", "小吉", "吉", "半吉", "末小吉", "凶",
             "小凶", "半凶", "末凶", "凶", "大凶"};
         Random rand = new Random();
         //乱数所得
         Integer index = rand.nextInt(luckList.length);
-        
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Testservlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println(luckList[index]);
-           
-            out.println("</body>");
-            out.println("</html>");
-        }
+        ResultData data = new ResultData();
+data.setD(new Date());
+data.setLuck(luckList[index]);
+request.setAttribute("DATA",data);
+
+RequestDispatcher rd = request.getRequestDispatcher(result);
+rd.forward(request,response);
+
+       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -94,4 +94,5 @@ public class FortuneTelling extends HttpServlet {
     }// </editor-fold>
 
 }
+
 
