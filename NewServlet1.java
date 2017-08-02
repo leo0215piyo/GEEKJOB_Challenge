@@ -30,7 +30,12 @@ public class NewServlet1 extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-        if(true){
+            
+//        out.print(myprofile(out));    
+        //myprofile(out) = true    
+        
+        
+        if(myprofile(out)){
         out.print("この処理は正しく実行できました");
         }else{
         out.print("正しく実行できませんでした");
